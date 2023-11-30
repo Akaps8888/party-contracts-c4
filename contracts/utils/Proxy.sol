@@ -21,6 +21,8 @@ contract Proxy {
         }
     }
 
+    receive() external payable {}
+
     // Forward all calls to the implementation.
     fallback() external payable {
         Implementation impl = IMPL;

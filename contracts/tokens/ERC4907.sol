@@ -5,7 +5,7 @@ import "openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "openzeppelin/contracts/utils/Counters.sol";
 import "./IERC4907.sol";
 
-contract ERC4907 is IERC4907 {
+contract ERC4907 is ERC721, IERC4907 {
     struct UserInfo
     {
         address user;   // address of user role
@@ -58,7 +58,7 @@ contract ERC4907 is IERC4907 {
     }
 
     /// @dev See {IERC165-supportsInterface}.
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, IERC165) returns (bool) {
         return interfaceId == type(IERC4907).interfaceId || super.supportsInterface(interfaceId);
     }
 
