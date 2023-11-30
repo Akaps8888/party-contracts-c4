@@ -5,7 +5,7 @@ import "openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "openzeppelin/contracts/utils/Counters.sol";
 import "../../tokens/IERC4907.sol";
 
-contract ERC4907 is ERC721, IERC4907 {
+contract ERC4907 is IERC4907 {
     struct UserInfo
     {
         address user;   // address of user role

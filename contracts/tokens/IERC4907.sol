@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Beta Software
 pragma solidity ^0.8;
 
-import "./IERC721.sol";
+import "openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 // Minimal ERC4907 interface.
 interface IERC4907 is IERC721 {
