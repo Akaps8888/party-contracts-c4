@@ -229,7 +229,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "operator",
+        "name": "approved",
         "type": "address"
       },
       {
@@ -335,7 +335,7 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "owner",
+        "name": "from",
         "type": "address"
       },
       {
