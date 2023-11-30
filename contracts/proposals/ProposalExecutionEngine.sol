@@ -9,6 +9,7 @@ import "./IProposalExecutionEngine.sol";
 import "./ListOnOpenseaProposal.sol";
 import "./ListOnZoraProposal.sol";
 import "./FractionalizeProposal.sol";
+import "./RentProposal.sol";
 import "./ArbitraryCallsProposal.sol";
 import "./LibProposal.sol";
 import "./ProposalStorage.sol";
@@ -22,6 +23,7 @@ contract ProposalExecutionEngine is
     ListOnOpenseaProposal,
     ListOnZoraProposal,
     FractionalizeProposal,
+    RentProposal,
     ArbitraryCallsProposal
 {
     using LibRawResult for bytes;
@@ -38,6 +40,7 @@ contract ProposalExecutionEngine is
         ListOnZora,
         Fractionalize,
         ArbitraryCalls,
+        Rent,
         UpgradeProposalEngineImpl,
         // Append new proposal types here.
         NumProposalTypes
@@ -90,6 +93,7 @@ contract ProposalExecutionEngine is
         ListOnOpenseaProposal(globals, seaport, seaportConduitController)
         ListOnZoraProposal(globals, zoraAuctionHouse)
         FractionalizeProposal(fractionalVaultFactory)
+        RentProposal()
     {
         _GLOBALS = globals;
     }
@@ -215,6 +219,8 @@ contract ProposalExecutionEngine is
             nextProgressData = _executeFractionalize(params);
         } else if (pt == ProposalType.ArbitraryCalls) {
             nextProgressData = _executeArbitraryCalls(params);
+        } else if (pt == ProposalType.Rent) {
+            nextProgressData = _executeRent(params);
         } else if (pt == ProposalType.UpgradeProposalEngineImpl) {
             _executeUpgradeProposalsImplementation(params.proposalData);
         } else {
@@ -253,7 +259,7 @@ contract ProposalExecutionEngine is
     {
         (address expectedImpl, bytes memory initData) =
             abi.decode(proposalData, (address, bytes));
-        // Always upgrade to latest implementation stored in `_GLOBALS`.
+        // Always upgrade to latest implementationGLOBALS`.
         IProposalExecutionEngine newImpl = IProposalExecutionEngine(
             _GLOBALS.getAddress(LibGlobals.GLOBAL_PROPOSAL_ENGINE_IMPL)
         );
